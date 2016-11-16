@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <ImageView
+        android:layout_width="61dp"
+        android:layout_height="94dp"
+        android:src="@drawable/icon"
+        android:id="@+id/imageView"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:contentDescription="@string/logo_signa" />
+
+    <TableLayout
+        android:layout_width="146dp"
+        android:layout_height="match_parent"
+        android:stretchColumns="1"
+        android:layout_weight="0.96">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nombre_del_centro"
+            android:id="@+id/CentroTxt"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="3dp"
+            android:typeface="monospace"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Datos del centro"
+            android:id="@+id/DatosCentroTxt"
+            android:layout_weight="0.08"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="3dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/datos_dos_centro"
+            android:id="@+id/DatosCentroTxt2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:id="@+id/DatosFechaTxt"
+            android:layout_weight="0.08"
+            android:layout_marginLeft="2dp"
+
+            android:text="@string/fecha" />
+
+    </TableLayout>
+
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:id="@+id/imageView2"
+        android:src="@drawable/pverde" />
+</LinearLayout>
