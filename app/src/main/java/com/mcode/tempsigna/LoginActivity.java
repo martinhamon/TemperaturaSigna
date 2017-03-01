@@ -1,11 +1,16 @@
 package com.mcode.tempsigna;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -46,7 +51,9 @@ public class LoginActivity extends Activity {
     private String password;
     private String idusuario;
     UsuariosSQLiteHelper usdbh;
-
+    private static final int PERMISSIONS_REQUEST_READ_PHONE_STATE = 999;
+    String imei;
+    private TelephonyManager mTelephonyManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -128,7 +135,18 @@ public class LoginActivity extends Activity {
             }
         });
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
+
+            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE},
+                        PERMISSIONS_REQUEST_READ_PHONE_STATE);
+            } else {
+                getDeviceImei();
+            }
+
+        }
     }
 
     private void makeJsonArrayRequest() {
@@ -152,6 +170,8 @@ public class LoginActivity extends Activity {
                         String pass = usr.getString("pass");
                         String fecha = usr.getString("fecha");
                         int activo = Integer.parseInt(usr.getString("activo"));
+                        String mail = usr.getString("email");
+                        String centro = (usr.getString("centro"));
 
                         if (!nusuario.equals("inexistente") && activo == 1) {
 
@@ -167,7 +187,9 @@ public class LoginActivity extends Activity {
                                 ContentValues values = new ContentValues();
                                 values.put("user", idusuario);
                                 values.put("pass", password);
-                                values.put("mail", "a@q.com");
+                                values.put("mail", mail);
+                                values.put("id_user", id);
+
                                 if (checkuser.isChecked())
                                     values.put("rmuser", "1");
                                 else
@@ -177,7 +199,7 @@ public class LoginActivity extends Activity {
                                 else
                                     values.put("rmpass", "0");
 
-
+                                values.put("centro", centro);
                                 db.insert("Usuarios", null, values);
 
 
@@ -228,5 +250,21 @@ public class LoginActivity extends Activity {
         AppController.getInstance().addToRequestQueue(req);
     }
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        if (requestCode == PERMISSIONS_REQUEST_READ_PHONE_STATE
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            getDeviceImei();
+        }
+    }
+
+    private void getDeviceImei() {
+
+        mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        imei = mTelephonyManager.getDeviceId();
+
+    }
     //*******************************
 }

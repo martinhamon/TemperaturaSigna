@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class UsuariosSQLiteHelper extends SQLiteOpenHelper {
 
     //Sentencia SQL para crear la tabla de Usuarios
-    String sqlCreate = "CREATE TABLE Usuarios (user TEXT, pass TEXT, mail TEXT, rmuser INT, rmpass INT)";
+    String sqlCreate = "CREATE TABLE Usuarios (user TEXT, pass TEXT, mail TEXT, rmuser INT, rmpass INT , centro INT, imei STRING, id_user INT)";
 
     public UsuariosSQLiteHelper(Context contexto, String nombre,
                                 CursorFactory factory, int version) {

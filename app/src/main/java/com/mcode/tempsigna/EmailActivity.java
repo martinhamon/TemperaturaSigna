@@ -20,8 +20,6 @@ import com.mcode.temperaturasigna.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static com.mcode.tempsigna.Util.DameIMEI;
-
 public class EmailActivity extends AppCompatActivity {
     ProgressDialog mProgressDialog;
     private static String url = "http://www.m-code.com.ar/Old/Android/emailupdate.php?email=";
@@ -47,14 +45,15 @@ public class EmailActivity extends AppCompatActivity {
         if (db != null) {
 
 
-            Cursor c = db.rawQuery("Select user, pass, rmuser, rmpass from Usuarios  ", null);
+            Cursor c = db.rawQuery("Select user, pass, rmuser, rmpass , mail from Usuarios  ", null);
 
 //Nos aseguramos de que existe al menos un registro
             if (c.moveToFirst()) {
                 //Recorremos el cursor hasta que no haya más registros
                 do {
+                    TextView email_act = (TextView) findViewById(R.id.Email_actual);
+                    email_act.setText(c.getString(4));
                     user = c.getString(0);
-
 
                 } while (c.moveToNext());
             }
@@ -72,6 +71,7 @@ public class EmailActivity extends AppCompatActivity {
 
                 if (emailtxt.getText().length() > 0 && android.util.Patterns.EMAIL_ADDRESS.matcher(emailtxt.getText().toString()).matches()) {
                     url = url.concat(emailtxt.getText().toString());
+
                     mProgressDialog.setMessage("Actualizando correo . . .");
                     mProgressDialog.show();
                     sendEmail();
@@ -87,7 +87,7 @@ public class EmailActivity extends AppCompatActivity {
 
 
     private void sendEmail() {
-        url = url.concat("&user=" + user + "&imei=" + DameIMEI(context));
+        url = url.concat("&user=" + user);
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 url, null, new Response.Listener<JSONObject>() {
 

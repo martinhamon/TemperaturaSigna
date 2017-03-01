@@ -4,11 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -47,15 +48,14 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab;
     private static String TAG = MainActivity.class.getSimpleName();
     AdapterCentros adapter;
-    ArrayList<Centro> arraycentros = new ArrayList<Centro>();
+    ArrayList<Centro> arraycentros = new ArrayList<>();
     Random r;
     UsuariosSQLiteHelper usdbh;
+    int user_id;
     int ran = 0;
-    // temporary string to show the parsed response
+    String centroid = "99";
 
-    // data data
-    JSONObject data = null;
-    JSONArray tinf = null;
+    // temporary string to show the parsed response
 
 
     public MainActivity() {
@@ -95,6 +95,15 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent;
                 intent = new Intent(context, ActivityInfo.class);
+                if (position > 6)
+
+                {
+                    int param = position + 1;
+                    intent.putExtra("idcentro", param);
+                } else {
+                    intent.putExtra("idcentro", position);
+                }
+
                 startActivity(intent);
             }
         });
@@ -113,7 +122,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        usdbh = new UsuariosSQLiteHelper(this, "DBUsuarios", null, 1);
+        SQLiteDatabase db = usdbh.getWritableDatabase();
 
+        if (db != null) {
+
+
+            Cursor c = db.rawQuery("Select user, pass, rmuser, rmpass , mail, centro , id_user  from Usuarios  ", null);
+
+//Nos aseguramos de que existe al menos un registro
+            if (c.moveToFirst()) {
+                //Recorremos el cursor hasta que no haya más registros
+                do {
+
+                    centroid = c.getString(5);
+                    user_id = c.getInt(5);
+
+                } while (c.moveToNext());
+            }
+
+            //Cerramos la base de datos
+            db.close();
+
+
+        }
     }
 
 
@@ -135,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 String registrationToken = Util.ObtenerRegistrationTokenEnGcm(getApplicationContext());
 
                 publishProgress("Sinconizando datos...");
-                String respuesta = Util.RegistrarseEnAplicacionServidor(getApplicationContext(), registrationToken);
+                String respuesta = Util.RegistrarseEnAplicacionServidor(getApplicationContext(), registrationToken, user_id);
                 return respuesta;
 
             } catch (Exception ex) {
@@ -156,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
                 //Util.MostrarAlertDialog(context, "Registro exitoso. " + resulatado, "GCM", R.mipmap.ic_launcher).show();
             } else if (result instanceof Exception)//Si el resultado es una Excepcion..hay error
             {
-                Exception ex = (Exception) result;
                 //Util.MostrarAlertDialog(context, ex.getMessage(), "ERROR", R.mipmap.ic_launcher).show();
             }
         }
@@ -167,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
     //****************************************************
     private void makeJsonArrayRequest() {
         ran = r.nextInt();
-        final String URL = "http://www.m-code.com.ar/Old/getdata.php?r=" + ran;
+        final String URL = "http://www.m-code.com.ar/Old/getdata.php?r=" + ran + "&centro=" + centroid;
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -175,12 +206,30 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     // Parsing json array response
                     // loop through each json object
+                    if (centroid.equals("99")) {
+                        for (int i = 0; i < response.length(); i++) {
 
-                    for (int i = 0; i < response.length(); i++) {
+                            JSONObject centro = (JSONObject) response.get(i);
 
-                        JSONObject centro = (JSONObject) response.get(i);
-                        int li = 0;
+                            String id_centro = centro.getString("id");
+                            String nombre_centro = centro.getString("nombre_centro");
+                            String temperatura_s1 = centro.getString("temperatura_s1");
+                            String temperatura_s2 = centro.getString("temperatura_s2");
+                            String humedad = centro.getString("humedad");
+                            String fecha = centro.getString("fecha");
+                            int control = centro.getInt("control");
 
+
+                            arraycentros.add(new Centro(nombre_centro, "Temp S1: " + temperatura_s1 + " Hum: " + humedad, "Temp Agua: " + temperatura_s2, humedad, "Ultima lectura: " + fecha, control));
+                        }
+
+                    } else {
+                        int centemp = Integer.parseInt(centroid);
+                        if (Integer.parseInt(centroid) > 6) {
+                            centemp = Integer.parseInt(centroid) - 1;
+                        }
+                        JSONObject centro = (JSONObject) response.get(centemp);
+                        String id_centro = centro.getString("id");
                         String nombre_centro = centro.getString("nombre_centro");
                         String temperatura_s1 = centro.getString("temperatura_s1");
                         String temperatura_s2 = centro.getString("temperatura_s2");
@@ -188,8 +237,8 @@ public class MainActivity extends AppCompatActivity {
                         String fecha = centro.getString("fecha");
                         int control = centro.getInt("control");
 
-                        arraycentros.add(new Centro(nombre_centro, "Temp S1: " + temperatura_s1 + " Hum: " + humedad, "Temp Agua: " + temperatura_s2, humedad, "Ultima lectura: " + fecha, control));
 
+                        arraycentros.add(new Centro(nombre_centro, "Temp S1: " + temperatura_s1 + " Hum: " + humedad, "Temp Agua: " + temperatura_s2, humedad, "Ultima lectura: " + fecha, control));
                     }
                     lista.setAdapter(adapter);
                     mProgressDialog.dismiss();
@@ -211,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
+                HashMap<String, String> headers = new HashMap<>();
                 headers.put("CUSTOM_HEADER", "Yahoo");
                 headers.put("ANOTHER_CUSTOM_HEADER", "Google");
                 return headers;
@@ -230,15 +279,13 @@ public class MainActivity extends AppCompatActivity {
     //***************************************************
 
 
-    private void makeJsonObjectRequest() {
-    }
 
 
     private void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Show menu icon
-        final ActionBar ab = getSupportActionBar();
+        //final ActionBar ab = getSupportActionBar();
         //ab.setHomeAsUpIndicator(R.drawable.icon);
         //b.setDisplayHomeAsUpEnabled(true);
 
@@ -266,6 +313,13 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(MainActivity.this, About.class);
                 startActivity(intent);
+
+            case R.id.action_mess:
+
+                Intent intentmsg = new Intent(MainActivity.this, NotifActivity.class);
+                startActivity(intentmsg);
+
+
 
             default:
                 return super.onOptionsItemSelected(item);

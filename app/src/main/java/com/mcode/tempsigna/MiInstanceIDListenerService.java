@@ -1,5 +1,7 @@
 package com.mcode.tempsigna;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -11,7 +13,8 @@ import com.google.android.gms.iid.InstanceIDListenerService;
 public class MiInstanceIDListenerService extends InstanceIDListenerService {
 
     private static final String TAG = "MyInstanceIDLS";
-
+    UsuariosSQLiteHelper usdbh;
+    int user_id;
     /**
      * Se llama cuando Gcm servers actualizan el registration token, principalemnte por motivos  de seguridad
      */
@@ -26,14 +29,37 @@ public class MiInstanceIDListenerService extends InstanceIDListenerService {
 
         @Override
         protected Object doInBackground(String... params) {
+            usdbh = new UsuariosSQLiteHelper(getApplicationContext(), "DBUsuarios", null, 1);
+            SQLiteDatabase db = usdbh.getWritableDatabase();
 
+            if (db != null) {
+
+
+                Cursor c = db.rawQuery("Select user, pass, rmuser, rmpass , mail, centro , id_user  from Usuarios  ", null);
+
+//Nos aseguramos de que existe al menos un registro
+                if (c.moveToFirst()) {
+                    //Recorremos el cursor hasta que no haya más registros
+                    do {
+
+
+                        user_id = c.getInt(5);
+
+                    } while (c.moveToNext());
+                }
+
+                //Cerramos la base de datos
+                db.close();
+
+
+            }
             try {
 
                 publishProgress("Sinconizando datos...");
                 String registrationToken = Util.ObtenerRegistrationTokenEnGcm(getApplicationContext());
 
                 publishProgress("Sinconizando datos...");
-                String respuesta = Util.RegistrarseEnAplicacionServidor(getApplicationContext(), registrationToken);
+                String respuesta = Util.RegistrarseEnAplicacionServidor(getApplicationContext(), registrationToken, user_id);
                 return respuesta;
             } catch (Exception ex) {
                 return ex;

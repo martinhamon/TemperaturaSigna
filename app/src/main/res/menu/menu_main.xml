@@ -14,8 +14,12 @@
         android:id="@+id/about"
         android:orderInCategory="102"
         android:title="About"
-        android:icon="@android:drawable/ic_menu_info_details"
-        app:showAsAction="always" />
+        app:showAsAction="never"
+        android:icon="@android:drawable/ic_menu_info_details" />
+    <item
+        android:id="@+id/action_mess"
+        android:title="@string/action_mess"
+        android:orderInCategory="100" />
 
 
 </menu>

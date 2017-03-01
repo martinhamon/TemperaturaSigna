@@ -23,7 +23,7 @@ import java.net.URL;
 /**
  * Created by MH on 20/10/2015.
  */
-public class Util {
+public class Util extends Activity {
 
 
     public static AlertDialog MostrarAlertDialog(Context activity, String mensaje, String titulo, int icono) {
@@ -68,9 +68,9 @@ public class Util {
 
     }
 
-    public static String RegistrarseEnAplicacionServidor(Context context, String registrationToken) throws Exception {
+    public static String RegistrarseEnAplicacionServidor(Context context, String registrationToken, int id_user) throws Exception {
         String imei = DameIMEI(context);
-        String stringUrl = "http://www.m-code.com.ar/Old/Android/RegistroGcm.php?imei=" + imei + "&registrationId=" + registrationToken;
+        String stringUrl = "http://www.m-code.com.ar/Old/Android/RegistroGcm.php?imei=" + imei + "&registrationId=" + registrationToken + "&id_centro=" + id_user;
 
         URL url = new URL(stringUrl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -103,6 +103,7 @@ public class Util {
     }
 
     public static String DameIMEI(Context context) {
+
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return tm.getDeviceId();
     }

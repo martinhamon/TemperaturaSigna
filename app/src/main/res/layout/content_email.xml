@@ -35,9 +35,30 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ingrese su email y presine el boton."
+        android:text="Ingrese su email y presione el boton."
         android:id="@+id/Labelemailsend"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mail actualmente registrado:"
+        android:id="@+id/mailactual"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/Labelemailsend" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sindato"
+        android:id="@+id/Email_actual"
+        android:layout_below="@+id/mailactual"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/button"
+        android:layout_alignRight="@+id/emailtxt"
+        android:layout_alignEnd="@+id/emailtxt" />
 </RelativeLayout>

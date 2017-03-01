@@ -29,14 +29,14 @@ public class ActivityInfo extends AppCompatActivity {
     LineAndPointFormatter series1Format;
     Number[] series1Numbers;
     XYSeries series1;
-    private static String url = "http://m-code.com.ar/Old/getdatahistory.php?id=0";
-
+    private static String url = "";
+    int id = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
-
-
+        id = getIntent().getExtras().getInt("idcentro");
+        url = "http://m-code.com.ar/Old/getdatahistory.php?id=" + id;
         mySimpleXYPlot = (XYPlot) findViewById(R.id.mySimpleXYPlot);
 
 
@@ -84,7 +84,7 @@ public class ActivityInfo extends AppCompatActivity {
                     // Parsing json array response
                     // loop through each json object
 
-                    ArrayList<Double> myV = new ArrayList<Double>();
+                    ArrayList<Double> myV = new ArrayList<>();
                     for (int i = 0; i < response.length(); i++) {
 
                         JSONObject centro = (JSONObject) response.get(i);
