@@ -1,7 +1,7 @@
 package com.mcode.tempsigna;
 
 /**
- * Created by Systema on 22/07/2016.
+ * Created by Systema on 22/07/2016. aaa mh
  */
 public class Usuario {
     private int id;
