@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.mcode.temperaturasigna.R;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  * Created by MH on 06/10/2015.
@@ -20,6 +21,7 @@ public class AdapterCentros extends BaseAdapter {
 
     protected Activity activity;
     protected ArrayList<Centro> items;
+    protected String temp;
 
     public AdapterCentros(Activity activity, ArrayList<Centro> items) {
         this.activity = activity;
@@ -63,7 +65,21 @@ public class AdapterCentros extends BaseAdapter {
         datoscentro_2.setText(centro.getTemperatura_s2());
 
         TextView fechacentro = (TextView) v.findViewById(R.id.DatosFechaTxt);
+
         fechacentro.setText(centro.getFecha());
+         temp= new String(" ");
+
+        TextView energiaTextView = (TextView) v.findViewById(R.id.energia);
+
+        temp = temp.concat( "Energia:  " + getState(Integer.parseInt(centro.energia)));
+        energiaTextView.setText(temp);
+        TextView bombaTextView = (TextView) v.findViewById(R.id.bomba);
+        temp="Bomba: " +  getState(Integer.parseInt(centro.bomba));
+        bombaTextView.setText(temp);
+        TextView compTextView = (TextView) v.findViewById(R.id.compresor);
+        temp="Compresor: "+   getState(Integer.parseInt(centro.compresor));
+        compTextView.setText(temp);
+
         ImageView btn = (ImageView) v.findViewById(R.id.imageView2);
         if (centro.control == 1) {
 
@@ -75,4 +91,18 @@ public class AdapterCentros extends BaseAdapter {
 
         return v;
     }
+
+    private String getState (int ST)
+    {
+        switch (ST) {
+            case 1:
+                return "OK";
+
+
+            default:
+                return "N/A";
+
+        }
+    }
+
 }

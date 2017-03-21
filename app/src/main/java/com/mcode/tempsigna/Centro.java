@@ -24,14 +24,47 @@ public class Centro {
     protected String fecha;
     protected long idCentro;
 
+    public String getEnergia() {
+        return energia;
+    }
 
-    public Centro(String nombreCentro, String temperatura_s1, String temperatura_s2, String humedadCentro, String fecha, int control) {
+    public String getCompresor() {
+        return compresor;
+    }
+
+    public String getBomba() {
+        return bomba;
+    }
+
+    public void setEnergia(String energia) {
+        this.energia = energia;
+    }
+
+    public void setCompresor(String compresor) {
+        this.compresor = compresor;
+    }
+
+    public void setBomba(String bomba) {
+        this.bomba = bomba;
+    }
+
+    protected String energia;
+    protected String compresor;
+    protected String bomba;
+
+
+    public Centro(String nombreCentro, String temperatura_s1, String temperatura_s2, String humedadCentro, String fecha,
+                  int control, String energia
+            ,String bomba, String compresor) {
         this.nombreCentro = nombreCentro;
         this.temperatura_s1 = temperatura_s1;
         this.temperatura_s2 = temperatura_s2;
         this.humedadCentro = humedadCentro;
         this.fecha = fecha;
         this.control = control;
+        this.energia=energia;
+        this.compresor=compresor;
+        this.bomba=bomba;
         //this.idCentro = idCentro;
 
     }
