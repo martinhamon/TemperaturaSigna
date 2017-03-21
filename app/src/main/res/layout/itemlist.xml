@@ -5,62 +5,85 @@
     android:weightSum="1">
 
     <ImageView
-        android:layout_width="61dp"
-        android:layout_height="94dp"
-        android:src="@drawable/icon"
         android:id="@+id/imageView"
-        android:layout_marginTop="4dp"
+        android:layout_width="61dp"
+        android:layout_height="147dp"
         android:layout_marginBottom="4dp"
-        android:contentDescription="@string/logo_signa" />
+        android:layout_marginTop="4dp"
+        android:contentDescription="@string/logo_signa"
+        android:src="@drawable/icon" />
+
 
     <TableLayout
-        android:layout_width="146dp"
+        android:layout_width="170dp"
         android:layout_height="match_parent"
+        android:layout_weight="0.96"
+        android:orientation="horizontal"
         android:stretchColumns="1"
-        android:layout_weight="0.96">
+        android:visibility="visible">
 
         <TextView
+            android:id="@+id/CentroTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/nombre_del_centro"
-            android:id="@+id/CentroTxt"
             android:layout_marginLeft="2dp"
             android:layout_marginTop="3dp"
-            android:typeface="monospace"
-            android:textSize="20dp"
+            android:text="@string/nombre_del_centro"
             android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold|italic" />
+            android:textSize="20dp"
+            android:textStyle="bold|italic"
+            android:typeface="monospace" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Datos del centro"
             android:id="@+id/DatosCentroTxt"
-            android:layout_weight="0.08"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
-            android:layout_marginTop="3dp" />
+            android:layout_marginTop="3dp"
+            android:text="Datos del centro" />
 
         <TextView
+            android:id="@+id/DatosCentroTxt2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/datos_dos_centro"
-            android:id="@+id/DatosCentroTxt2" />
+            android:text="@string/datos_dos_centro" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
             android:id="@+id/DatosFechaTxt"
-            android:layout_weight="0.08"
+            android:layout_width="wrap_content"
+
+            android:layout_height="20dp"
             android:layout_marginLeft="2dp"
+            android:layout_weight="0.00"
 
             android:text="@string/fecha" />
+
+        <TextView
+            android:id="@+id/energia"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_weight="0.00"
+            android:text="@string/energyMsg" />
+
+        <TextView
+            android:id="@+id/bomba"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_weight="0.00"
+            android:text="@string/BombMsg" />
+
+        <TextView
+            android:id="@+id/compresor"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_weight="0.00"
+            android:text="@string/CompMesg" />
 
     </TableLayout>
 
     <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:id="@+id/imageView2"
         android:src="@drawable/pverde" />
 </LinearLayout>

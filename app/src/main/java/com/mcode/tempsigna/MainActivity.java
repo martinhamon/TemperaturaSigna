@@ -218,9 +218,13 @@ public class MainActivity extends AppCompatActivity {
                             String humedad = centro.getString("humedad");
                             String fecha = centro.getString("fecha");
                             int control = centro.getInt("control");
+                            String energia = centro.getString("energia");
+                            String compresor = centro.getString("compresor");
+                            String bomba = centro.getString("bomba");
 
 
-                            arraycentros.add(new Centro(nombre_centro, "Temp S1: " + temperatura_s1 + " Hum: " + humedad, "Temp Agua: " + temperatura_s2, humedad, "Ultima lectura: " + fecha, control));
+                            arraycentros.add(new Centro(nombre_centro, "Temp S1: " + temperatura_s1 + " Hum: " + humedad, "Temp Agua: " + temperatura_s2,
+                                    humedad, "Ultima lectura: " + fecha, control,energia,bomba,compresor));
                         }
 
                     } else {
@@ -235,10 +239,14 @@ public class MainActivity extends AppCompatActivity {
                         String temperatura_s2 = centro.getString("temperatura_s2");
                         String humedad = centro.getString("humedad");
                         String fecha = centro.getString("fecha");
+                        String energia = centro.getString("energia");
+                        String compresor = centro.getString("compresor");
+                        String bomba = centro.getString("bomba");
                         int control = centro.getInt("control");
 
 
-                        arraycentros.add(new Centro(nombre_centro, "Temp S1: " + temperatura_s1 + " Hum: " + humedad, "Temp Agua: " + temperatura_s2, humedad, "Ultima lectura: " + fecha, control));
+                        arraycentros.add(new Centro(nombre_centro, "Temp S1: " + temperatura_s1 + " Hum: " + humedad, "Temp Agua: " + temperatura_s2, humedad,
+                                "Ultima lectura: " + fecha, control, energia,bomba,compresor));
                     }
                     lista.setAdapter(adapter);
                     mProgressDialog.dismiss();
