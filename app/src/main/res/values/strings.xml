@@ -29,6 +29,9 @@
     <string name="enviar">Enviar</string>
     <string name="info_mssg">El mensaje sera enviado con el proposito de alertar a todos los usuarios de la aplicacion. Solo debe ser usado para casos reales de emergencia cuando por ningun otro medio se pudo contactar. Recuerde que tanto usted como los demas deben tener WiFi o datos Activo de lo contrario el mesaje podria no enviarse o recibirse.</string>
     <string name="action_mess">Notificar</string>
+    <string name="energyMsg">Energia:</string>
+    <string name="BombMsg">Bomba:</string>
+    <string name="CompMesg">Comp:</string>
 
 
 </resources>

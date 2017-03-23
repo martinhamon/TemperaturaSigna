@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1">
-
+<!---->
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="61dp"
@@ -40,13 +40,16 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
             android:layout_marginTop="3dp"
-            android:text="Datos del centro" />
+            android:text="Datos del centro"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/DatosCentroTxt2"
+            android:layout_marginLeft="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/datos_dos_centro" />
+            android:text="@string/datos_dos_centro"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/DatosFechaTxt"
@@ -56,28 +59,34 @@
             android:layout_marginLeft="2dp"
             android:layout_weight="0.00"
 
-            android:text="@string/fecha" />
+            android:text="@string/fecha"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/energia"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:layout_weight="0.00"
-            android:text="@string/energyMsg" />
+
+            android:text="@string/energyMsg"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/bomba"
             android:layout_width="wrap_content"
+            android:layout_marginLeft="2dp"
             android:layout_height="20dp"
             android:layout_weight="0.00"
-            android:text="@string/BombMsg" />
+            android:text="@string/BombMsg"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/compresor"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
+            android:layout_marginLeft="2dp"
             android:layout_weight="0.00"
-            android:text="@string/CompMesg" />
+            android:text="@string/CompMesg"
+            android:textStyle="bold" />
 
     </TableLayout>
 
