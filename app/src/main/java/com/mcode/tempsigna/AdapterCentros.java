@@ -95,8 +95,11 @@ public class AdapterCentros extends BaseAdapter {
     private String getState (int ST)
     {
         switch (ST) {
+            case 0:
+                return "NO";
             case 1:
                 return "OK";
+
 
 
             default:
