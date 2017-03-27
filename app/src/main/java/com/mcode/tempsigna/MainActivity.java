@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                             arraycentros.add(new Centro(nombre_centro, "Temp S1: " + temperatura_s1 + " Hum: " + humedad, "Temp Agua: " + temperatura_s2,
-                                    humedad, "Ultima lectura: " + fecha, control,energia,bomba,compresor));
+                                    humedad, "Ult. lect.: " + fecha, control,energia,bomba,compresor));
                         }
 
                     } else {
@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                         arraycentros.add(new Centro(nombre_centro, "Temp S1: " + temperatura_s1 + " Hum: " + humedad, "Temp Agua: " + temperatura_s2, humedad,
-                                "Ultima lectura: " + fecha, control, energia,bomba,compresor));
+                                "Ult. lect.: " + fecha, control, energia,bomba,compresor));
                     }
                     lista.setAdapter(adapter);
                     mProgressDialog.dismiss();
